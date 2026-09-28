@@ -1,0 +1,7 @@
+{
+  "string": [
+    { "name": "module_desc", "value": "Agents Anywhere 主模块" },
+    { "name": "EntryAbility_desc", "value": "跨设备 Agent 工作台：查看会话、处理审批、浏览文件与终端" },
+    { "name": "EntryAbility_label", "value": "Agents Anywhere" }
+  ]
+}

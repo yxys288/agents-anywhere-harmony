@@ -1,0 +1,74 @@
+// =====================================================================
+// build-profile.json5 示例（aa-hm / Agents Anywhere 鸿蒙端）
+//
+// 为什么有这个文件：工程根真正的 build-profile.json5 由 DevEco Studio 在
+// Sync / 自动签名时写入，**含加密后的 keyPassword / storePassword 与本机绝对路径**，
+// 因此被 .gitignore 排除、绝不入库。开源读者按下面的步骤用本文件生成自己的那一份：
+//
+//   1) 复制本文件为工程根的 build-profile.json5：
+//        Windows:  copy build-profile.example.json5 build-profile.json5
+//        Git Bash: cp build-profile.example.json5 build-profile.json5
+//   2) 用 DevEco Studio 打开工程 → File > Project Structure > Signing Configs
+//      → 勾选 "Automatically generate signature" 并登录华为账号；
+//      DevEco 会自动改写 signingConfigs[0].material（写入 ~/.ohos/config 下的
+//      证书 / profile / 密钥库路径与口令串）。**不要手工填写密钥**，更不要提交。
+//   3) 命令行构建：node tools/build-locked.mjs
+//      （它会补齐 DEVECO_SDK_HOME 与 PATH 后调 hvigorw assembleHap；见该脚本头部注释）
+//
+// ⚠️ 关键：products[0] 必须保留 "signingConfig": "default"。
+//    否则 DevEco 的 Run 会报 "No signingConfig found for product default"，
+//    命令行构建也只产出 unsigned HAP（装不到设备上）。
+//
+// ⚠️ 本文件**禁止**出现真实 keyPassword / storePassword / 证书指纹。
+// =====================================================================
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          // 以下字段全部由 DevEco 自动签名生成并覆盖（占位符仅示意形状）
+          "certpath": "<AUTO: ~/.ohos/config/default_aa-hm_*.cer>",
+          "keyAlias": "debugKey",
+          "keyPassword": "<AUTO: 由 DevEco 生成，勿提交>",
+          "profile": "<AUTO: ~/.ohos/config/default_aa-hm_*.p7b>",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "<AUTO: ~/.ohos/config/default_aa-hm_*.p12>",
+          "storePassword": "<AUTO: 由 DevEco 生成，勿提交>"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default", // 关键：必须引用上面的签名配置名
+        "compatibleSdkVersion": "26.0.0",
+        "targetSdkVersion": "26.0.0",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      { "name": "debug" },
+      { "name": "release" }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": ["default"]
+        }
+      ]
+    }
+  ]
+}

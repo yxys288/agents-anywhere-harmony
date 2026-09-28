@@ -1,0 +1,9 @@
+{
+  "name": "entry",
+  "version": "2.0.0",
+  "description": "Agents Anywhere 鸿蒙端入口模块（工作台 + 会话 + 终端 + 文件）",
+  "main": "",
+  "author": "luoyaowen",
+  "license": "MIT",
+  "dependencies": {}
+}

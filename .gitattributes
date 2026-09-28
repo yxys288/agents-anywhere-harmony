@@ -1,0 +1,30 @@
+# 行尾与二进制处理策略 —— 让不同平台 clone 出来的仓库逐字节一致。
+#
+# 为什么需要它：本工程既在 Windows 上用 PowerShell 跑真机脚本，又在任意平台上跑
+# node 逻辑自测；若各人 Git 的 core.autocrlf 设置不同，同一份源码在不同机器上会得到
+# 不同的行尾 ⇒ 源码闸门类断言（按行解析 .ets / module.json5）与 diff 都会漂。
+#
+# 约定：
+#   · 默认一律 LF（.ets / .json5 / .mjs / .md / .gitignore …）；
+#   · Windows 脚本（.ps1 / .bat / .cmd）检出为 CRLF —— Windows PowerShell 5.1 对
+#     无 BOM 的 LF 脚本兼容性差，用 CRLF 最稳；
+#   · 图片与签名材料按二进制处理，禁止任何行尾转换（转换会直接损坏文件）。
+* text=auto eol=lf
+
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.hap binary
+*.har binary
+*.hsp binary
+*.p12 binary
+*.cer binary
+*.p7b binary
+*.zip binary

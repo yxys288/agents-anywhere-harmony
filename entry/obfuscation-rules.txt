@@ -1,0 +1,31 @@
+# ============================================================================
+# aa-hm 混淆规则文件（R83 新增）
+#
+# 为什么这个文件必须存在：`entry/build-profile.json5` 的 **release** 档里写了
+#   "obfuscation": { "ruleOptions": { "enable": false, "files": ["./obfuscation-rules.txt"] } }
+# 但工程里从来没有这个文件 —— hvigor 会直接报 00304036「The obfuscation rule file ... cannot be found」
+# 并中止 `assembleHap`。也就是说：**本工程此前只有 debug 包能构建，正式版（release）路径从未跑通**。
+# 这个空规则文件是让 release 路径可构建的最小充分条件（enable=false ⇒ 本文件当前不改变任何产物）。
+#
+# 现状（R83）：**混淆关闭**。将来要打开时按下面顺序，并且必须先补 -keep 规则 ——
+#   · 本工程大量依赖 ArkTS 的**属性名反射**：`JSON.parse` 出来的对象按字段名直取（`raw['sessionId']`）、
+#     `@State`/`@Prop` 装饰的成员名与 JSON 契约同名、`Object.keys()` 参与协议归一化；
+#   · 一旦开 `-enable-property-obfuscation` 而没有 keep 住这些字段名，网络层会**静默**解析出 undefined，
+#     Rust 侧的联调现象是「界面空白但请求成功」——比编译期报错难查得多。
+#   · 打开前请先用 release 包跑一遍 `tools/logic-test/run-all.mjs` 对应的真机冒烟（登录 / 会话列表 / 发一条消息 / 终端回显）。
+#
+# 用法参考：https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/source-obfuscation
+# ============================================================================
+
+# ---- 混淆开关（当前全部关闭，逐条启用后必须复跑真机冒烟）----
+# -enable-property-obfuscation
+# -enable-toplevel-obfuscation
+# -enable-export-obfuscation
+# -enable-filename-obfuscation
+# -compact
+# -remove-log
+
+# ---- 保留规则（开启混淆时按需补充；现在留空）----
+# -keep-property-name
+# -keep-global-name
+# -keep-file-name

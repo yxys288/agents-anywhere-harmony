@@ -1,0 +1,96 @@
+{
+  "module": {
+    "name": "entry",
+    "type": "entry",
+    "description": "$string:module_desc",
+    "mainElement": "EntryAbility",
+    "deviceTypes": [
+      "phone",
+      "tablet"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    // ⚠️ **R65 起启用**（当前 = `enable`）。**值必须小写**：大写会被静默忽略（坑 2）。
+    "metadata": [
+      { "name": "ohos.arkui.UIMaterial.state", "value": "enable" }
+    ],
+    // ## 为什么 R59/R61 写「不启用」，R65 又打开
+    // R59/R61 的实测**本身没问题**：设置抽屉 / `bindPopup` / 自绘圆钮 / 甚至 `Navigation` 标题栏的
+    // 专属 `TitleBarOptions.systemMaterial` 与 Hds 的 `titleBar.systemMaterialEffect`，在
+    // `state=1(ENABLE)`、`supported=true`、`level=0(EXQUISITE)` 下 ROI MAE 全是 **0.0000**。
+    // 但**当时的归因错了**：2026-09-24 查到官方 OS 平台行为变更（仅对 `targetSdkVersion >= 26.0.0`
+    // 生效，本工程正是 26.0.0）——
+    //  > 弹窗类组件/接口 与 Slider/Toggle/Select 仍可在页面内**全部区域**生效；
+    //  > **其他组件仅在 `Navigation`/`NavDestination` 标题栏、或横向 Tabs 且
+    //  > `barPosition = BarPosition.End` 的底部 TabBar 中生效；在其他区域设置沉浸光感效果不生效。**
+    // ⇒ 那些 0 像素测的多是**页面正文里的自绘容器**，从 HarmonyOS 7 起本来就不在生效范围内
+    // （不报错、不告警、**静默无效**）。完整配方与判据见 `坑 245`。
+    //
+    // ## R65 的决定性 A/B（由 Lead 在真机上跑，判据 = 开关前后两包**逐像素 MAE**）
+    // 本工程**唯一**位于 `Navigation` 标题栏内的功能钮 = 首页顶栏两个钮
+    // （`HomeScreen.ets` 的 `Navigation()` + `.title(this.homeTitleBar(), …)`）。
+    // Step 1 只把这两个钮切成「官方材质 only」：`ui/GlassIcon.ets` 的编译期常量
+    // `TOPBAR_OFFICIAL_MATERIAL`（默认 true）+ `AaGlassIconButton.officialMaterial`。
+    // ⚠️ 该分支**不画任何自绘层**（无 `backgroundEffect` / `.shadow(` / 渐变 / 边框），
+    //  因为官方明确「材质会接管 `backgroundColor`/`borderColor`/`borderWidth`/`shadow`，不建议同用」。
+    // ⚠️ ROI 必须锁在首页顶栏两个钮上：OFF 包与 ON 包其余代码完全相同（只差这一个常量）。
+    //
+    // ## 前置开关的三个客观量（探针 hilog tag=`aaGlassMat`）
+    //  无 metadata → `supported=true state=0(DEFAULT) level=0(EXQUISITE)`
+    //  有 metadata → `supported=true state=1(ENABLE) level=0(EXQUISITE)`
+    //  ⇒ 本项开启后 `state` 必须由 0 变 1；若仍为 0，是 metadata 写法/位置错（值必须小写）。
+    // ⚠️ 与 `ui/GlassIcon.ets` 的 `GLASS_MATERIAL_MODE` 是**两套独立开关**：那个管自绘钮要不要
+    //  再挂一层 `systemMaterial`（档 0 = `Material.empty` = 显式关闭），默认仍为 0。
+    //
+    // ## 连带面（官方新约束规定的范围；**R65-T1 本轮不改，仅列给真机复核**）
+    // 全局开关会连带启用：①弹窗类（AlertDialog / ActionSheet / CustomDialog / 各 Picker 弹窗 /
+    // SelectionMenu / AlphabetIndexer 弹窗 / Text `copyOption` 文本菜单）②弹窗类接口（PromptAction、
+    // `bindPopup`/菜单/Tips/半模态）③**Slider / Toggle / Select**。
+    // 本工程对应位置：设置页的开关与滑块、外观三选一/下拉菜单、设置页「语言」「Agent 预设」小窗
+    // （`bindPopup`）、会话详情页的半模态。
+    //
+    // ## 历史证据索引（保留，避免「换个平台就假失败」式误判）
+    // · R59：抽屉 + `bindPopup` 的 ROI MAE = 0.0000（全帧 0.0169 的 801 个差异像素全在状态栏时钟行）；
+    // · R61：`Navigation` 标题栏专属 `systemMaterial` 与 Hds `systemMaterialEffect(IMMERSIVE/EXQUISITE)`
+    //  同样 0 像素；同期找到**唯一能画的官方标题栏效果** = `barStyle: STACK` +
+    //  `scrollEffectOptions.GRADUAL_BLUR`（只响应**手势**滚动，程序化 `scrollTo()` 不触发）。
+    // · 完整勘察：开发期验证记录、
+    //  开发期验证记录。
+    // ⚠️ 复跑方式：把上面 `metadata` 整块删掉即回到「材质关」包；其余代码完全相同。
+
+
+    "abilities": [
+      {
+        "name": "EntryAbility",
+        "srcEntry": "./ets/entryability/EntryAbility.ets",
+        "description": "$string:EntryAbility_desc",
+        "icon": "$media:startIcon",
+        "label": "$string:EntryAbility_label",
+        "startWindowIcon": "$media:startIcon",
+        "startWindowBackground": "$color:start_window_background",
+        "exported": true,
+        "skills": [
+          {
+            "entities": [
+              "entity.system.home"
+            ],
+            "actions": [
+              "action.system.home"
+            ]
+          }
+        ]
+      }
+    ],
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.INTERNET"
+      },
+      {
+        "name": "ohos.permission.GET_NETWORK_INFO"
+      }
+    ]
+  }
+}
+
+
