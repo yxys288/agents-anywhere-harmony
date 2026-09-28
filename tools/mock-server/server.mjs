@@ -1434,7 +1434,7 @@ const server = http.createServer(async (request, response) => {
     return ok({
       userId: 'user-mock', role: 'user', accessToken: TOKEN, tokenType: 'bearer',
       serverTime: NOW(), email: body?.email ?? 'mock@example.com',
-      displayName: '罗尧文（模拟）', emailVerified: true
+      displayName: '模拟用户', emailVerified: true
     });
   }
   if (route === '/auth/register' && method === 'POST') {
@@ -1450,14 +1450,14 @@ const server = http.createServer(async (request, response) => {
     }
     return ok({
       userId: 'user-mock', role: 'user', disabled: false, serverTime: NOW(),
-      email: 'mock@example.com', displayName: '罗尧文（模拟）', emailVerified: true
+      email: 'mock@example.com', displayName: '模拟用户', emailVerified: true
     });
   }
   for (const p of ['/auth/me/profile', '/auth/me/email', '/auth/me/avatar']) {
     if (route === p) {
       return ok({
         userId: 'user-mock', role: 'user', disabled: false, serverTime: NOW(),
-        email: 'mock@example.com', displayName: '罗尧文（模拟）', emailVerified: true
+        email: 'mock@example.com', displayName: '模拟用户', emailVerified: true
       });
     }
   }
