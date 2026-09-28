@@ -1,5 +1,7 @@
 # ArkTS / ArkUI 实战踩坑集
 
+> 本仓库是开源项目 [Agents Anywhere](https://github.com/anywhere-labs/Agents-Anywhere)（[anywhere-labs](https://github.com/anywhere-labs) 维护，MIT，版权标识 Copyright (c) 2026 Agents Anywhere Contributors）的**鸿蒙端适配**。归属、第三方组件与上游许可全文见 [NOTICE.md](../NOTICE.md)。
+
 > 面向 **HarmonyOS 7 / API 26** 的实战记录。每一条都统一写成「**现象 → 根因 → 修法**」，并尽量给出**判据**。
 
 ## 为什么有这份文档

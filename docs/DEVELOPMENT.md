@@ -1,5 +1,7 @@
 # 开发指南
 
+> 本仓库是开源项目 [Agents Anywhere](https://github.com/anywhere-labs/Agents-Anywhere)（[anywhere-labs](https://github.com/anywhere-labs) 维护，MIT，版权标识 Copyright (c) 2026 Agents Anywhere Contributors）的**鸿蒙端适配**。归属、第三方组件与上游许可全文见 [NOTICE.md](../NOTICE.md)。
+
 本文覆盖四件事：**把工程跑起来**、**命令行构建到零告警**、**无需设备的逻辑自测**、**上设备调试与签名**。
 
 约定：所有命令都在**工程根目录**（本仓库根）执行；路径示例统一用正斜杠。

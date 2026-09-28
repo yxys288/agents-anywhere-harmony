@@ -1,6 +1,10 @@
 # aa-hm · Agents Anywhere 鸿蒙客户端
 
-把开源项目 [Agents Anywhere](https://github.com/anywhere-labs/Agents-Anywhere) 的 **Android 原生客户端**（Kotlin + Jetpack Compose，约 4.2 万行）改写成的**鸿蒙原生应用**（ArkTS + ArkUI，Stage 模型）。
+> **上游与归属**：本仓库是开源项目 **[Agents Anywhere](https://github.com/anywhere-labs/Agents-Anywhere)** 的**鸿蒙端适配**。
+> 上游项目由 [anywhere-labs](https://github.com/anywhere-labs) 维护，官网 [agents-anywhere.com](https://www.agents-anywhere.com)，
+> 上游版权标识为 Copyright (c) 2026 Agents Anywhere Contributors，以上游 README「开源许可」章节与 dsh-bridge/LICENSE 载明的 **MIT** 许可发布。
+> 具体做法是：把上游的 **Android 原生客户端**（Kotlin + Jetpack Compose，约 4.2 万行）改写为**鸿蒙原生应用**（ArkTS + ArkUI，Stage 模型）。
+> ⚠️ 本仓库**不是上游官方发布**，与上游 Android / iOS / 桌面 / Web 客户端是**并存关系**。完整归属、第三方组件与上游 MIT 许可全文见 [NOTICE.md](NOTICE.md)。
 
 Agents Anywhere 是跨设备的 Agent 工作台：工作电脑上跑 Connector，把 Codex / Claude Code / DeepSeek Harness 等 Agent 的会话暴露出来；手机端负责**查看进展、回复 Agent、处理审批、浏览工作区文件、开远程终端**。本项目是它的鸿蒙端实现：80 个 `.ets` / 51,210 行 ArkTS，覆盖登录、工作台、会话详情、审批与提问、附件、文件浏览与文本预览、以及一套**自研的 VT 终端仿真**（不依赖 ArkUI，可独立单测）。
 
@@ -206,11 +210,28 @@ node tools/mock-server/server.mjs --port 8787
 | [docs/ARKTS-PITFALLS.md](docs/ARKTS-PITFALLS.md) | ArkTS / ArkUI 实战踩坑集（状态与刷新、布局与命中、材质与模糊、导航栏、终端与流式、构建） |
 | [specs/01-api-spec.md](specs/01-api-spec.md) | 上游 v2 API 契约：端点表、事件信封、终端帧格式 |
 
-## 致谢
+## 上游与致谢
 
-- [Agents Anywhere](https://github.com/anywhere-labs/Agents-Anywhere)：本项目的上游。本仓库是它的**鸿蒙原生客户端**，协议、交互与信息架构均以上游 Android 端为基准改写；上游的 Android 客户端（Kotlin + Jetpack Compose）与本项目是**并存的两个客户端**，不是替代关系。
-- 上游使用的开源生态（Kotlin、Jetpack Compose、Material 3、Termux 终端组件等）为本项目的功能对齐提供了参照。
+本项目的**上游原作者与项目**如下（完整声明见 [NOTICE.md](NOTICE.md)）：
+
+| 项 | 内容 |
+| --- | --- |
+| 上游项目 | **Agents Anywhere**（跨设备的开源 Agent 工作台） |
+| 上游地址 | [github.com/anywhere-labs/Agents-Anywhere](https://github.com/anywhere-labs/Agents-Anywhere) |
+| 上游维护方 | [anywhere-labs](https://github.com/anywhere-labs) |
+| 上游版权标识 | Copyright (c) 2026 Agents Anywhere Contributors |
+| 上游官网 | [agents-anywhere.com](https://www.agents-anywhere.com) · Web [web.agents-anywhere.com](https://web.agents-anywhere.com) |
+| 上游许可 | MIT |
+
+**本开源项目根据上游原项目做鸿蒙端（HarmonyOS）适配**：把上游 Android 客户端（Kotlin + Jetpack Compose）改写为 ArkTS / ArkUI 实现，
+协议、交互与信息架构以上游 Android 端为基准；本仓库**不是上游官方发布**，也不包含上游源码。
+
+此外，上游使用的开源生态（Kotlin、Jetpack Compose、Material 3、Termux 终端组件等）为本项目的功能对齐提供了参照；
+本项目使用的第三方图标与字体许可见 [NOTICE.md](NOTICE.md#第三方组件)。
 
 ## 许可证
 
-本项目以 [MIT License](LICENSE) 发布，版权归 luoyaowen 所有。
+本项目以 [MIT License](LICENSE) 发布，版权归 **yxys288** 所有。
+
+本项目是 [Agents Anywhere](https://github.com/anywhere-labs/Agents-Anywhere)（Copyright (c) 2026 Agents Anywhere Contributors，MIT）的**鸿蒙端适配**，
+按 MIT 许可保留上游版权声明与许可声明，全文见 [NOTICE.md](NOTICE.md)。

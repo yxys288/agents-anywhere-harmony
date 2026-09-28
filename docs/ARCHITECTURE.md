@@ -1,5 +1,7 @@
 # 架构
 
+> 本仓库是开源项目 [Agents Anywhere](https://github.com/anywhere-labs/Agents-Anywhere)（[anywhere-labs](https://github.com/anywhere-labs) 维护，MIT，版权标识 Copyright (c) 2026 Agents Anywhere Contributors）的**鸿蒙端适配**。归属、第三方组件与上游许可全文见 [NOTICE.md](../NOTICE.md)。
+
 本文说明这个鸿蒙客户端**怎么分层、数据怎么流动、以及两个关键设计取舍的理由**。
 
 ## 1. 总览
