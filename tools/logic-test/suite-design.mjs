@@ -1183,7 +1183,7 @@ check('T16 材质工厂存在（uiMaterial.ImmersiveMaterial）',
   glassIconCode.indexOf('new uiMaterial.ImmersiveMaterial({') >= 0);
 check('T16 档 0 返回 Material.empty（= 显式关闭材质，不是「不调用」）',
   glassIconCode.indexOf('return uiMaterial.Material.empty;') >= 0);
-check('T16 S1/S2 用 ImmersiveStyle.THIN 且 colorInvert=false（PrismAgent 实测反色）',
+check('T16 S1/S2 用 ImmersiveStyle.THIN 且 colorInvert=false（浅背景上会反色）',
   glassIconCode.indexOf('uiMaterial.ImmersiveStyle.THIN') >= 0
     && (glassIconCode.split('colorInvert: false').length - 1) >= 2);
 check('R65：lightEffect 只用 color（SDK LightEffectOptions 唯一字段），且两处都在实验/官方分支内',
